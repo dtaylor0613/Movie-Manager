@@ -1,0 +1,86 @@
+import java.util.ArrayList;
+
+public class User {
+    private ArrayList<Movie> ownedMovies;
+    ArrayList<Movie> unownedMovies;
+    private double totalSpent;
+    private boolean isSubscribed;
+
+    public User() {
+        this.ownedMovies = new ArrayList<>();
+        this.unownedMovies = new ArrayList<>();
+        this.totalSpent = 0.0;
+        this.isSubscribed = false;
+    }
+
+    public void viewMovieList() {
+        System.out.println("Available Movies:");
+        for (Movie movie : unownedMovies) {
+            System.out.println(movie);
+        }
+    }
+
+    public void viewOwnedMovies() {
+        System.out.println("Owned Movies:");
+        for (Movie movie : ownedMovies) {
+            System.out.println(movie);
+        }
+    }
+
+    public void addMovie(String movieName) {
+        for (Movie movie : unownedMovies) {
+            if (movie.getName().equalsIgnoreCase(movieName)) {
+                ownedMovies.add(movie);
+                unownedMovies.remove(movie);
+                totalSpent += movie.getPrice();
+                System.out.println("Movie added: " + movie);
+                return;
+            }
+        }
+        System.out.println("Movie not available.");
+    }
+
+    public void removeMovie(String movieName) {
+        for (Movie movie : ownedMovies) {
+            if (movie.getName().equalsIgnoreCase(movieName)) {
+                ownedMovies.remove(movie);
+                System.out.println("Movie removed: " + movie);
+                return;
+            }
+        }
+        System.out.println("Movie not owned.");
+    }
+
+    public double getTotalSpent() {
+        return totalSpent;
+    }
+
+    public boolean checkIfSubscribed() {
+        return isSubscribed;
+    }
+
+    public void upgradeSubscription() {
+        if (!isSubscribed) {
+            isSubscribed = true;
+            System.out.println("Subscription upgraded.");
+        } else {
+            System.out.println("Already subscribed.");
+        }
+    }
+
+    public void getMovieInfo(String movieName) {
+        for (Movie movie : ownedMovies) {
+            if (movie.getName().equalsIgnoreCase(movieName)) {
+                System.out.println("Owned Movie Info: " + movie);
+                return;
+            }
+        }
+        for (Movie movie : unownedMovies) {
+            if (movie.getName().equalsIgnoreCase(movieName)) {
+                System.out.println("Available Movie Info: " + movie);
+                return;
+            }
+        }
+        System.out.println("Movie not found.");
+    }
+}
