@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class MovieManager {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        User user = new User();
+
+        // Adding some initial unowned movies
+        user.unownedMovies.add(new Movie("Venom", 12.99));
+        user.unownedMovies.add(new Movie("DUNE", 12.99));
+        user.unownedMovies.add(new Movie("Pokemon: The First Movie", 8.99));
+        user.unownedMovies.add(new Movie("The Matrix", 8.99));
+        user.unownedMovies.add(new Movie("Dragon Ball Super: Broly", 10.99));
+
+        System.out.println("Welcome to the Movie Manager!");
+        String command;
+
+        while (true) {
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("Options: 'view owned', 'view available', 'buy movie', 'remove movie', 'total spent', 'check subscription', 'upgrade subscription', 'movie info', 'exit'");
+            command = scanner.nextLine().toLowerCase();
+
+            switch (command) {
+                case "view owned":
+                    user.viewOwnedMovies();
+                    break;
+                case "view available":
+                    user.viewMovieList();
+                    break;
+                case "buy movie":
+                    System.out.println("Enter the name of the movie you want to buy:");
+                    String movieToBuy = scanner.nextLine();
+                    user.addMovie(movieToBuy);
+                    break;
+                case "remove movie":
+                    System.out.println("Enter the name of the movie you want to remove:");
+                    String movieToRemove = scanner.nextLine();
+                    user.removeMovie(movieToRemove);
+                    break;
+                case "total spent":
+                    System.out.println("Total spent on movies: $" + user.getTotalSpent());
+                    break;
+                case "check subscription":
+                    System.out.println("Subscription status: " + (user.checkIfSubscribed() ? "Subscribed" : "Not Subscribed"));
+                    break;
+                case "upgrade subscription":
+                    user.upgradeSubscription();
+                    break;
+                case "movie info":
+                    System.out.println("Enter the name of the movie:");
+                    String movieToCheck = scanner.nextLine();
+                    user.getMovieInfo(movieToCheck);
+                    break;
+                case "exit":
+                    System.out.println("Thank you for using the Movie Manager. Goodbye!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid command. Please try again.");
+            }
+        }
+    }
+}
